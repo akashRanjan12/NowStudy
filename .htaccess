@@ -1,0 +1,20 @@
+RewriteEngine On
+
+# Redirect to HTTPS (uncomment when you have SSL)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Protect sensitive files
+<FilesMatch "\.(env|json|config.js|md|gitignore|gitattributes|lock)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Prevent access to uploads directory directly
+<FilesMatch "\.(pdf|doc|docx|txt)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# API routing
+RewriteRule ^api/([^/]+)/?$ api/$1.php [L,QSA]
